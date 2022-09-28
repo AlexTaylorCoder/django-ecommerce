@@ -29,7 +29,17 @@
                 </ul>
                 </div>
             </div>
+
+            <span class="hello-msg">{{user.username}}</span>
+            <span><a href="{% url 'logout' %}">Logout</a></span>
             </nav>
+
+            <style>
+                .hell0-msg{
+                    margin-right: 20px;
+                }
+            </style>
+
             <div id = "content">
                 {% block content %}
                     Loading
