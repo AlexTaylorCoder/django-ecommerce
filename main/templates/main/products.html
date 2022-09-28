@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+{% block title %} Shop {% endblock title %}
+{% block content %}
+    {% for product in products%}
+        <div id = {{product.id}}>
+            <h1>{{product.price}}</h1>
+            <h1><a href="/main/{{product.id}}">{{product.name}}</a></h1>
+        </div>
+    {% endfor %}
+{% endblock content %}
