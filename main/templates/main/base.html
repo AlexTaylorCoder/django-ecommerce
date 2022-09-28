@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="{% static '/css/base.css' %}" type="text/css"
         <link rel="icon" href="{% static '/images/chainz_logo.png' %}">
 
-        {% block title %}<title>Base</title>{% endblock title %}
+        <title>{% block title %}Base{% endblock title %}</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
