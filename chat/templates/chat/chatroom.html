@@ -41,14 +41,19 @@
                 }
                 if (data.message) {
                     const newMessage = document.createElement("p")
+                    const username = document.createElement("p")
+                    username.textContent = data.user
                     newMessage.textContent = data.message
                     document.getElementById("recieved-messages").append(newMessage)
+                    document.getElementById("recieved-messages").append(username)
+                    console.log(data)
                 }
             }
             document.getElementById("submit-button").onclick = ()=> {
                 //Get dom element text content and convert to json_script
                 node = document.getElementById("user-input");
                 text = node.value;
+
                 chatSocket.send(JSON.stringify({
                     'message':text,
                 }));

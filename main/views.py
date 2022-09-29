@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .models import Product
 from .forms import CreateNewProduct
+from django.contrib.auth.models import User 
+
 
 from django.contrib.auth.decorators import login_required 
 # Create your views here.
@@ -10,7 +12,7 @@ def index(response):
     products = {"products":Product.objects.all()}
     return render(response, 'main/products.html',products)
 def show(response,id):
-    product = {"product":Product.objects.get(pk=id)}
+    product = {"product":Product.objects.get(pk=id), "room_name":id}
     return render(response,'main/product.html',product)
 
 @login_required(login_url='http://127.0.0.1:8000/auth/login/')
@@ -26,3 +28,6 @@ def create(response):
     else:
         form = CreateNewProduct()
     return render(response,'main/create.html',{"form":form})
+@login_required(login_url='http://127.0.0.1:8000/auth/login/')
+def profile(response):
+    return render(response, 'main/profile.html')
