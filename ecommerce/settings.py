@@ -89,6 +89,8 @@ DATABASES = {
 }
 
 
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -139,3 +141,9 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ASGI_APPLICATION = "ecommerce.routing.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND":"channels.layers.InMemoryChannelLayer"
+    }
+}
