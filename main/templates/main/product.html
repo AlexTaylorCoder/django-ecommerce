@@ -2,8 +2,56 @@
 {% load static %}
 {% block title %}product.name{% endblock title %}
 {% block content %}
-    <h1>{{product.price}}</h1>
-    <h1>{{product.name}}</h1>
-    <img src={{product.image.url}} alt={{product.image}} />
-    <h1>{{product.name}}</h1>
-{% endblock content %}
+    <body>
+        <h1>{{product.price}}</h1>
+        <h1>{{product.name}}</h1>
+        <img src={{product.image.url}} alt={{product.image}} />
+
+        <p> Talk to staff <p>
+        <h1 id = "first-message"> </h1>
+        <textarea style="width:80%" id="user-input" col="50" row="100"></textarea>
+        <button id = "submit-button">Send</button>
+        <div id = "recieved-messages"></div>
+        {{room_name|json_script:"room-name"}}
+        <script>
+            const roomName = JSON.parse(document.getElementById('room-name').textContent);
+            console.log(roomName)
+
+            const chatSocket = new WebSocket(
+                'ws://' +
+                window.location.host +
+                '/ws/main/' +
+                roomName +
+                '/'
+            );
+            
+            //Every time recieves message fires
+            chatSocket.onmessage = (e)=> {
+                const data =  JSON.parse(e.data)
+                console.log(data)
+                if (data.tester) {
+                    document.getElementById("first-message").textContent = (data.tester)
+                }
+                if (data.message) {
+                    const newMessage = document.createElement("p")
+                    const username = document.createElement("p")
+                    username.textContent = data.user
+                    newMessage.textContent = data.message
+                    document.getElementById("recieved-messages").append(newMessage)
+                    document.getElementById("recieved-messages").append(username)
+                    console.log(data)
+                }
+            }
+            document.getElementById("submit-button").onclick = ()=> {
+                //Get dom element text content and convert to json_script
+                node = document.getElementById("user-input");
+                text = node.value;
+
+                chatSocket.send(JSON.stringify({
+                    'message':text,
+                }));
+                node.value = "";
+            }
+        </script>
+    </body>
+    {% endblock content %}
