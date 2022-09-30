@@ -7,5 +7,6 @@ urlpatterns = [
     path('',views.index, name="index"),
     path('<int:id>', views.show, name="show"),
     path('create',views.create, name="create"),
-    path('profile',views.profile, name="profile")
+    path('profile',views.profile, name="profile"),
+    path('update/<int:id>/',views.updateProduct,name="update")
 ]

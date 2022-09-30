@@ -31,3 +31,11 @@ def create(response):
 @login_required(login_url='http://127.0.0.1:8000/auth/login/')
 def profile(response):
     return render(response, 'main/profile.html')
+
+
+# @login_required(login_url='http://127.0.0.1:8000/auth/login/')
+def updateProduct(response, pk):
+    product = Product.objects.get(id=pk)
+    form = CreateNewProduct(instance=product)
+
+    return render(response,'main/create.html',{"form":form})
