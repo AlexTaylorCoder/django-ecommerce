@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'register.apps.RegisterConfig',
     'django_seed',
     'chat.apps.ChatConfig',
+    'embed_video',
 ]
 
 MIDDLEWARE = [

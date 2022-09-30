@@ -3,9 +3,17 @@
 {% block title %}product.name{% endblock title %}
 {% block content %}
     <body>
-        <h1>{{product.price}}</h1>
-        <h1>{{product.name}}</h1>
-        <img src={{product.image.url}} alt={{product.image}} />
+        <div class="container_video">
+            <video autoplay loop muted>
+                <!-- <source src="https://content.rolex.com/dam/watches/hubs/all-watches/videos/hub-collection-watches-cover-portrait.mp4" type="video/mp4" /> -->
+                <source src="{% static '/images/boat.mp4' %}" type="video/mp4" />
+            </video>
+        </div>
+        <div class="product-info">
+            <h1>{{product.name}}</h1>
+            <img src={{product.image.url}} alt={{product.image}} />
+            <p>{{product.price}}</p>
+        </div>
 
         <p> Talk to staff <p>
         <h1 id = "first-message"> </h1>
@@ -54,4 +62,20 @@
             }
         </script>
     </body>
+
+    <style>
+        .container_video video{
+            object-fit: cover;
+            width: 100%;
+            height: 500px;
+        }
+
+        .product-info {
+            background-color: rgb(97, 93, 93);
+        }
+
+        .product-info h1{
+            text-align: center;
+        }
+    </style>
     {% endblock content %}
