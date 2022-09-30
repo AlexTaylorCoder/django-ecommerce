@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .models import Product
 from .forms import CreateNewProduct
-from django.contrib.auth.models import User 
+
 
 
 from django.contrib.auth.decorators import login_required 
@@ -30,4 +30,4 @@ def create(response):
     return render(response,'main/create.html',{"form":form})
 @login_required(login_url='http://127.0.0.1:8000/auth/login/')
 def profile(response):
-    return render(response, 'main/profile.html')
+    return render(response, 'main/profile.html',{"user":response.user})
