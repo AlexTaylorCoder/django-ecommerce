@@ -1,6 +1,68 @@
-<h1>
-awrawr
-{{user.username}}
-{{user.email}}
-{{user.date_joined}}
-</h1>
+{% extends 'main/base.html' %}
+{% block title %}Profile{% endblock title %}
+{% block content %}
+<div id = "profile-container">
+    <h2>
+    {{user.username| capfirst}}
+    </h2>
+    <h3>
+    {{user.email}}
+    </h3>
+    <h6>
+    {{user.date_joined | date}}
+    </h6>
+    <div id = "cart-items-container">
+        <div class="image-container">
+            <img src="https://idea7.co.uk/wp-content/uploads/2021/02/placeholder-250x250-1.png"/>
+            <h1>awtawt</h1>
+            {% comment %} display product name and price {% endcomment %}
+        </div>
+        <div class="image-container">
+            <img src="https://idea7.co.uk/wp-content/uploads/2021/02/placeholder-250x250-1.png"/>
+        </div>
+        <div class="image-container">
+            <img src="https://idea7.co.uk/wp-content/uploads/2021/02/placeholder-250x250-1.png"/>
+        </div>
+        <div class="image-container">
+            <img src="https://idea7.co.uk/wp-content/uploads/2021/02/placeholder-250x250-1.png"/>
+        </div>
+
+
+    </div>
+</div>
+{% endblock content %}
+{% block profile-style %}
+    #profile-container {
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items:center;
+        gap: 5px;
+        padding:20px;
+    }
+    .image-container  {
+        position: relative;
+        width: 250px;
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .image-container img:hover {
+        background-color: black;
+        opacity: .2;
+    }
+    .image-container img {
+        position: absolute;
+        transition: opacity 300ms;
+    }
+    #cart-items-container {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 30px;
+    }
+{% endblock profile-style %}
+
+
+
