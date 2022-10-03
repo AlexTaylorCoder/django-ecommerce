@@ -3,17 +3,31 @@
 {% block title %}product.name{% endblock title %}
 {% block content %}
     <body>
-        <div class="container_video">
-            <video autoplay loop muted>
-                <!-- <source src="https://content.rolex.com/dam/watches/hubs/all-watches/videos/hub-collection-watches-cover-portrait.mp4" type="video/mp4" /> -->
-                <source src="{% static '/images/boat.mp4' %}" type="video/mp4" />
-            </video>
+        <div class="product-holder">
+            <div class="container_video">
+                <video autoplay loop muted>
+                    <!-- <source src="https://content.rolex.com/dam/watches/hubs/all-watches/videos/hub-collection-watches-cover-portrait.mp4" type="video/mp4" /> -->
+                    <source src="{% static '/images/boat.mp4' %}" type="video/mp4" />
+                </video>
+            </div>
+
+            <div class="product-descriptions">
+                <h1>{{product.miniDescription}}</h1>
+                <p>{{product.description}}</p>
+            </div>
+
+            <img src={{product.image.url}} alt={{product.image}} class="product-image"/>
+
+            <div class="product-price">
+                <p>$ {{product.price}}</p>
+                <div class="product-buttons">
+                    <button><a href="{% url 'update-product' product.id %}">update product</a></button>
+                    <button><a href="{% url 'delete-product' product.id %}">delete</a></button>
+                    <button>add to cart</button>
+                </div>
+            </div>
         </div>
-        <div class="product-info">
-            <h1>{{product.name}}</h1>
-            <img src={{product.image.url}} alt={{product.image}} />
-            <p>{{product.price}}</p>
-        </div>
+        
 
         <div id = "message-container">
             <div id = "recieved-messages">
@@ -69,7 +83,18 @@
         </script>
     </body>
 
+
+
+
     <style>
+
+        .product-holder {
+            /* background: rgb(34,193,195);
+            background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(240,45,253,1) 100%); */
+            background: rgb(34,193,195);
+            background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(240,45,253,1) 8%, rgba(53,180,201,1) 85%, rgba(59,175,203,1) 89%, rgba(68,169,205,1) 92%, rgba(40,189,197,1) 95%);
+        }
+
         .container_video video{
             object-fit: cover;
             width: 100%;
@@ -83,18 +108,71 @@
         .product-info h1{
             text-align: center;
         }
-        #message-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+
+        .product-descriptions {
             justify-content: center;
         }
-        #open-chat {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%
-            gap: 5px;
+
+        .product-descriptions h1{
+           text-align: center;
+            margin-left: 10%;
+            margin-right: 10%;
+            font-style: italic;
         }
+
+        .product-descriptions p{
+           text-align: center;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        .product-image {
+            border-radius: 5%;
+            width: 40%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+
+        .product-price {
+            text-align: center;
+            color: rgb(174, 181, 197);
+            font-size: 20px;
+            margin: 10px;
+        }
+
+        .product-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* height: 100vh; */
+        }
+
+        .product-buttons button{
+            border: 0;
+            border-radius: 10px;
+            background: rgb(238,174,202);
+            background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,201,233,1) 100%);
+            text-transform: uppercase;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 15px 30px;
+            outline: none;
+            position: relative;
+            transition: border-radius 3s;
+            -webkit-transition: border-radius 3s;
+        }
+
+        .product-buttons button:hover{
+            border-bottom-right-radius: 50px;
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+       
     </style>
     {% endblock content %}
+
+

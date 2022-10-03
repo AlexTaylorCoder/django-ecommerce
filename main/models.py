@@ -10,8 +10,8 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to="images/",null=True,blank=True)
-    miniDescription = models.CharField(max_length=40,null=True,blank=True)
-    description = models.CharField(max_length=200,null=True,blank=True)
+    miniDescription = models.CharField(max_length=200,null=True,blank=True)
+    description = models.CharField(max_length=400,null=True,blank=True)
     url = EmbedVideoField(null=True,blank=True)
 
     #Need foreign key for user here also
