@@ -1,6 +1,7 @@
+from dataclasses import fields
 from django import forms 
 from django.forms import ModelForm
-from .models import Product
+from .models import Product, Comment
 
 class CreateNewProduct(forms.Form):
     name = forms.CharField(max_length=20)
@@ -14,3 +15,7 @@ class ProductForm(ModelForm):
         model = Product
         fields = '__all__'
 
+class CreateComment(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["rating","text"]

@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block title %}product.name{% endblock title %}
 {% block content %}
     <body>
@@ -38,6 +39,34 @@
                 <textarea class="form-control" style="width:80%" id="user-input" col="50" row="100"></textarea>
                 <button type="submit" id = "submit-button" class="btn btn-primary"> Send </button>
             </div>
+        </div>
+        <div id = "comment-container">
+            <h2> Reviews - {{avg_rating.rating__avg}} </h2>
+            <p> {{comments_length}} {% if comments_length > 1 %} comments {% else %} comment {% endif %} </p>
+            {% for comment in comments %}
+                <div class="accordion" id = "comment">
+                    <div style="background-color:black;color:white" class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                          <button style="background-color:black;color:white" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            {{comment.user.username}} - {{comment.rating}}
+                          </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+                            <p> {{comment.text}} </p>                 
+                         </div>
+                        </div>
+                      </div>
+                </div>
+            {% endfor %}
+            
+            {% comment %} <div id = "new-comment">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% crispy form %}
+                    <button id="new-comment-button" type="submit">Comment</button>
+                </form>
+            </div> {% endcomment %}
         </div>
 
         {{room_name|json_script:"room-name"}}
@@ -80,7 +109,15 @@
                 }));
                 node.value = "";
             }
+
+            document.getElementById("new-comment-button").onclick = ()=> {
+                text = document.getElementById("comment-text").value 
+
+                //Send back data 
+            }
         </script>
+        <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     </body>
 
 

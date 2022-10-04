@@ -1,11 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from .models import Product
-from .forms import CreateNewProduct
-
-
-                             
-
+from .forms import CreateNewProduct, CreateComment
 from .forms import ProductForm
+from django.db.models import Avg
 
 from django.contrib.auth.decorators import login_required 
 # Create your views here.
@@ -15,9 +12,21 @@ def index(response):
     products = {"products":Product.objects.all()}
     return render(response, 'main/products.html',products)
 def show(response,id):
-    product = {"product":Product.objects.get(pk=id), "room_name":id}
-    return render(response,'main/product.html',product)
+    if response.method == "POST" and response.user.is_authenticated:
+        form = CreateComment(response.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.user = response.user
+            new_comment.product = Product.objects.get(pk=id)
+            new_comment.save()
 
+    p = Product.objects.get(pk=id)
+    c =  p.comment_set.all()
+    avg_rating = c.aggregate(Avg('rating'))
+
+    product = {"product": p, "comments":c, "comments_length":len(c), "avg_rating":avg_rating, "room_name":id, "form":CreateComment()}
+    return render(response,'main/product.html',product)
+    
 
 @login_required(login_url='http://127.0.0.1:8000/auth/login/')
 def create(response):

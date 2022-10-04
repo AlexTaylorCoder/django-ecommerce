@@ -1,11 +1,12 @@
 {% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %} Create {% endblock title %}
 {% block content %}
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.media}}
-        {{form.as_p}}
+        {% crispy form %}
         <button type="submit" class = "btn btn-primary">New Product</button>
     </form>
 {% endblock content %}
