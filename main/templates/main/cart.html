@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}product.name{% endblock title %}
+{% block content %} 
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}"/>
+<h1>Total: {{order.get_cart_total|floatformat:2}}</h1>
+<h1>Items: {{order.get_cart_items}}</h1>
+<h1>Products</h1>
+{% for item in items %}
+	<div class="shopping-product">
+		<h3 class="product-name">{{item.product.name}}</h3>
+		<h3 class="product-price">{{item.product.price|floatformat:2}}</h3>
+		<h3 class="product-quantity">quantity</h3>
+		<h3 class="quantity-number">{{item.quantity}}</h3>
+		<img data-product="{{item.product.id}}" data-action="add" src="{% static '/images/plus.png' %}" alt="edit-quantity" class="edit-quantity update-cart" onClick="window.location.reload();"/>
+		<img data-product="{{item.product.id}}" data-action="remove" src="{% static '/images/minus-sign.png' %}" alt="edit-quantity" class="edit-quantity update-cart" onClick="window.location.reload();"/>
+		<img src={{item.product.image.url}} alt={{item.product.name}} class="product-image"/>
+		<h3>{{item.get_total}}</h3>
+	</div>
+{% endfor %}
+
+{% endblock content %}
+

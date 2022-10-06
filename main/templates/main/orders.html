@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}product.name{% endblock title %}
+{% block content %} 
+
+<h1>Products</h1>
+{% for order in user_orders %}
+	<p>{{order.transaction_id}}</p>
+  <p>{{order.date_ordered}}</p>
+  <p>Completed: {{order.complete}}</p>
+
+{% endfor %}
+
+{% endblock content %}

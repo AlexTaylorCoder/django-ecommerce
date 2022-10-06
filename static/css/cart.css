@@ -1,0 +1,44 @@
+.shopping-product {
+  width: 100%;
+  height: 40%;
+  background-color: aliceblue;
+  border-radius: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px;
+}
+
+.product-name {
+  margin-left: 130px;
+  color: black;
+}
+
+.product-price {
+  margin-left: 230px;
+  color: black;
+}
+
+.product-quantity {
+  margin-left: 330px;
+  color: black;
+}
+
+.quantity-number {
+  color: black;
+
+}
+
+.edit-quantity {
+  object-fit: cover;
+  width: 2%;
+  margin-left:10px;
+  color: black;
+}
+
+
+.product-image {
+  margin-left: 430px;
+  object-fit: cover;
+  width: 60px;
+  border-radius: 15%;
+}

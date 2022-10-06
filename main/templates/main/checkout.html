@@ -1,0 +1,194 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}product.name{% endblock title %}
+{% block content %} 
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/checkout.css' %}"/>
+
+<div>
+  <h1>Order Summary</h1>
+
+<h1>Total: {{order.get_cart_total|floatformat:2}}</h1>
+<h1>Items: {{order.get_cart_items}}</h1>
+<h1>Products</h1>
+{% for item in items %}
+	<div class="shopping-product">
+		<h3 class="product-name">{{item.product.name}}</h3>
+		<h3 class="product-price">{{item.product.price|floatformat:2}}</h3>
+		<h3 class="product-quantity">quantity</h3>
+		<h3 class="quantity-number">{{item.quantity}}</h3>
+		<img src="{% static '/images/plus.png' %}" alt="edit-quantity" class="edit-quantity"/>
+		<img src="{% static '/images/minus-sign.png' %}" alt="edit-quantity" class="edit-quantity"/>
+		<img src={{item.product.image.url}} alt={{item.product.name}} class="product-image"/>
+		<h3>{{item.get_total}}</h3>
+	</div>
+{% endfor %}
+</div>
+
+<div class="container">
+  <h1>Shipping</h1>
+  <p>Please enter your shipping details.</p>
+  <hr />
+  <form class="form" id="form" method="POST">
+    <div class="fields fields--2">
+      <label class="field">
+        <span class="field__label" for="firstname">First name</span>
+        <input class="field__input" type="text" id="firstname" name="firstname" />
+      </label>
+      <label class="field">
+        <span class="field__label" for="lastname">Last name</span>
+        <input class="field__input" type="text" id="lastname" name="lastname" />
+      </label>
+    </div>
+    <label class="field">
+      <span class="field__label" for="address">Address</span>
+      <input class="field__input" type="text" id="address" name="address"/>
+    </label>
+    <label class="field">
+      <span class="field__label" for="country">Country</span>
+       <input class="field__input" type="text" id="country" name="country"/>
+    </label>
+    <div class="fields fields--3">
+      <label class="field">
+        <span class="field__label" for="zipcode">Zip code</span>
+        <input class="field__input" type="text" id="zipcode" name="zipcode"/>
+      </label>
+      <label class="field">
+        <span class="field__label" for="city">City</span>
+        <input class="field__input" type="text" id="city" name="city"/>
+      </label>
+      <label class="field">
+        <span class="field__label" for="state">State</span>
+        <input class="field__input" type="text" id="state" name="state"/>
+      </label>
+    </div>
+    <button class="button" id="form-button" type="submit">Continue</button>
+  </form>
+  <hr>
+</div>
+
+<div class="hidden" style="display: none;" id="payment-info">
+  <p>Paypal Options</p>
+  <button id="make-payment">make payment</button>
+ </div>
+
+<script type="text/javascript">
+
+  var total = '{{order.get_cart_total|floatformat:2}}'
+
+  var form = document.getElementById('form')
+  form.addEventListener('submit', function(e){
+    e.preventDefault()
+    console.log('form submitted...')
+    document.getElementById('form-button').style.display = "none";
+    document.getElementById('payment-info').style.display = "block"
+  })
+
+  document.getElementById('make-payment').addEventListener('click', function(e){
+    submitFormData()
+  })
+
+  function submitFormData(){
+    console.log('payment button clicked')
+
+    var userFormData = {
+      'firstname' :null,
+      'lastname' :null,
+      'total' :total,
+    }
+
+    var shippingInfo = {
+      'address' :null,
+      'city' :null,
+      'state' :null,
+      'zipcode' :zipcode,
+    }
+
+    userFormData.firstname = form.firstname.value
+    userFormData.lastname = form.lastname.value
+    userFormData.total = total
+
+    shippingInfo.address = form.address.value
+    shippingInfo.city = form.city.value
+    shippingInfo.state = form.state.value
+    shippingInfo.zipcode = form.zipcode.value
+
+    var url = '/main/process_order/'
+    fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type':'application/json',
+      'X-CSRFToken':csrftoken,
+    },
+      body:JSON.stringify({'shipping':shippingInfo, "form":userFormData})
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('success', data);
+      alert('Transaction completed');
+      window.location.href = "http://127.0.0.1:8000/main"
+    })
+  }
+</script>
+
+
+
+
+
+<div id="paypal-button-container"></div>
+        <!-- Sample PayPal credentials (client-id) are included -->
+        <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
+        <script>
+          const paypalButtonsComponent = paypal.Buttons({
+              // optional styling for buttons
+              // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
+              style: {
+                color: "gold",
+                shape: "rect",
+                layout: "vertical"
+              },
+
+              // set up the transaction
+              createOrder: (data, actions) => {
+                  // pass in any options from the v2 orders create call:
+                  // https://developer.paypal.com/api/orders/v2/#orders-create-request-body
+                  const createOrderPayload = {
+                      purchase_units: [
+                          {
+                              amount: {
+                                  value: "88.44"
+                              }
+                          }
+                      ]
+                  };
+
+                  return actions.order.create(createOrderPayload);
+              },
+
+              // finalize the transaction
+              onApprove: (data, actions) => {
+                  const captureOrderHandler = (details) => {
+                      const payerName = details.payer.name.given_name;
+                      console.log('Transaction completed');
+                  };
+
+                  return actions.order.capture().then(captureOrderHandler);
+              },
+
+              // handle unrecoverable errors
+              onError: (err) => {
+                  console.error('An error prevented the buyer from checking out with PayPal');
+              }
+          });
+
+          paypalButtonsComponent
+              .render("#paypal-button-container")
+              .catch((err) => {
+                  console.error('PayPal Buttons failed to render');
+              });
+        </script>
+
+{% endblock content %}
+
+
+   

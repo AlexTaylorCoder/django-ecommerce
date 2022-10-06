@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}product.name{% endblock title %}
+{% block content %} 
+
+<div class="main">
+    <!-- Create a Form -->
+    <form method="POST">
+        <!-- Security token by Django -->
+        {% csrf_token %}
+        Are you want to delete this item ?
+        <input type="submit" value="Yes" />
+        <a href="{{ request.META.HTTP_REFERER }}">Cancel </a>
+    </form>
+</div>
+
+<style>
+    .main{
+        display: flex;
+        justify-content: center;
+        font-size: 50px;
+        text-align: center;
+        margin-top: 18%;
+        align-items: center;
+    }
+
+    .main input{
+        background-color: rgba(247, 240, 240, 0.886);
+        border-radius: 15%;
+    }
+</style>
+
+
+{% endblock content %}

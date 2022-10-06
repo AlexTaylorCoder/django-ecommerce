@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static '/css/base.css' %}" type="text/css"
+        <link rel="icon" href="{% static '/images/chainz_logo.png' %}">
+        <script type="text/javascript">
+            var user = '{{request.user}}'
+
+            function getToken(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                    return cookieValue;
+                }
+                const csrftoken = getToken('csrftoken');
+
+        </script>
+
+        <title>{% block title %}Base{% endblock title %}</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/main"><img alt="chainz_logo" src="{% static '/images/chainz_logo.png' %}"/></a>
+                <!-- <a class="navbar-brand" href="{% url 'cart' %}"><img src="{% static 'images/cart.png' %}"/ alt="cart-logo"></a> -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/main">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href= "{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chat">Help</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" id="cart" href="/main/cart"><img src="{% static '/images/shopping-cart.png' %}" alt="cart"/> {{cart_Items}}</a>
+                    </li>
+                </ul>
+                </div>
+            </div>
+
+            
+
+            <span class="hello-msg">{{user.username}}</span>
+            <span><a href="{% url 'logout' %}">Logout</a></span>
+            </nav>
+
+            <style>
+                .hell0-msg{
+                    margin-right: 20px;
+                }
+
+                #cart-icon img{
+                    width: 3px;
+                }
+            </style>
+
+            <div id = "content">
+                {% block content %}
+                    Loading
+                {% endblock content %}
+            </div>
+        <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    </body>
