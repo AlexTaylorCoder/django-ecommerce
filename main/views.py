@@ -11,9 +11,8 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='http://127.0.0.1:8000/auth/login/')
 def like_comment(response,pk):
     comment = get_object_or_404(Comment, id=response.POST.get('like-id'))
-
-    if comment.likes.get(username=response.user) is True:
-        comment.likes.add(response.user)
+    # breakpoint()
+    comment.likes.add(response.user)
     return HttpResponseRedirect(reverse('show', args = [str(pk)]))
 
 @login_required(login_url='http://127.0.0.1:8000/auth/login/')
