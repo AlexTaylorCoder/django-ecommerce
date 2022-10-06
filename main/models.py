@@ -1,5 +1,6 @@
 from distutils.command.upload import upload
 from email.policy import default
+from enum import unique
 from django.db import models
 from django.contrib.auth.models import User 
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -18,8 +19,11 @@ class Product(models.Model):
 
 class Comment(models.Model):
     rating = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5),MinValueValidator(1)])
-    text = models.CharField(max_length=200)
+    text = models.CharField(max_length=400)
+    likes = models.ManyToManyField(User, related_name="comment_like")
     product = models.ForeignKey(Product, on_delete=models.CASCADE,default="",null=True,blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,default="",null=True,blank=True)
     #Needs through relationship, look more into django set relationships
     #Need foreign key for user here also
+    def total_likes(self):
+        return self.likes.count()

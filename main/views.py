@@ -1,11 +1,20 @@
+from audioop import avg
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
-from .models import Product
+from .models import Product, Comment
 from .forms import CreateNewProduct, CreateComment
 from .forms import ProductForm
-from django.db.models import Avg
+from django.db.models import Avg, Count
+from django.urls import reverse
 
 from django.contrib.auth.decorators import login_required 
 # Create your views here.
+@login_required(login_url='http://127.0.0.1:8000/auth/login/')
+def like_comment(response,pk):
+    comment = get_object_or_404(Comment, id=response.POST.get('like-id'))
+
+    if comment.likes.get(username=response.user) is True:
+        comment.likes.add(response.user)
+    return HttpResponseRedirect(reverse('show', args = [str(pk)]))
 
 @login_required(login_url='http://127.0.0.1:8000/auth/login/')
 def index(response):
@@ -22,9 +31,17 @@ def show(response,id):
 
     p = Product.objects.get(pk=id)
     c =  p.comment_set.all()
-    avg_rating = c.aggregate(Avg('rating'))
+    check_if_comm = c.filter(user=response.user).exists()
+    comment = c.annotate(Count('likes'))    
 
-    product = {"product": p, "comments":c, "comments_length":len(c), "avg_rating":avg_rating, "room_name":id, "form":CreateComment()}
+    product = {"product": p, "comments":comment, "comments_length":comment.count(), "room_name":id}
+    if comment.count() > 0:
+        avg_rating = comment.aggregate(Avg('rating'))
+        avg_rating_format = '{0:.2f}'.format(avg_rating["rating__avg"])
+        product["avg_rating"] = avg_rating_format
+        
+    if check_if_comm is False:
+        product["form"] = CreateComment()
     return render(response,'main/product.html',product)
     
 

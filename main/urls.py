@@ -11,4 +11,5 @@ urlpatterns = [
     path('update-product/<int:id>',views.updateProduct, name='update-product'),
     path('delete-product/<int:id>',views.deleteProduct, name='delete-product'),
     path('profile',views.profile, name="profile"),
+    path('like/<int:pk>',views.like_comment, name="like_comment")
 ]

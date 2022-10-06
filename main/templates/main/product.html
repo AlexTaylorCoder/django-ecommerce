@@ -1,7 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load product_extras %}
 {% load crispy_forms_tags %}
-{% block title %}product.name{% endblock title %}
+{% block title %}{{product.name}}{% endblock title %}
 {% block content %}
     <body>
         <div class="product-holder">
@@ -30,44 +31,73 @@
         </div>
         
 
-        <div id = "message-container">
-            <div id = "recieved-messages">
-                <h1 id = "first-message"> </h1>
+        <div class = "d-flexflex-column align-items-center" id = "message-container">
+            <button class = "bg-light text-dark rounded p-2" id = "first-message"> </button>
+            <div class="d-flex flex-column align-items-center gap-2" id = "recieved-messages">
             </div>
             {% comment %} Toggle on hidden {% endcomment %}
-            <div id = "open-chat">
+            <div class="d-flex flex-column p-2 align-items-center" id = "open-chat">
                 <textarea class="form-control" style="width:80%" id="user-input" col="50" row="100"></textarea>
-                <button type="submit" id = "submit-button" class="btn btn-primary"> Send </button>
+                <button type="submit" id = "submit-button" class="btn btn-primary btn-sm"> Send </button>
             </div>
         </div>
         <div id = "comment-container">
-            <h2> Reviews - {{avg_rating.rating__avg}} </h2>
-            <p> {{comments_length}} {% if comments_length > 1 %} comments {% else %} comment {% endif %} </p>
+                <div id = "avg-container">
+                    {% comment %} Ration of star to background gradient {% endcomment %}
+                    {% comment %} <div style="width:10px;height:10px;border-radius:50%;background-color:white"></div> 
+                    <div style="width:10px;height:10px;border-radius:50%;background-color:white"></div> 
+                    <div style="width:10px;height:10px;border-radius:50%;background-color:white"></div> 
+                    <div style="width:10px;height:10px;border-radius:50%;background-color:white"></div> 
+                    <div style="width:10px;height:10px;border-radius:50%;background-color:white"></div> {% endcomment %}
+
+                    <p>{{avg_rating }}</p>
+                    <p> ({{comments_length}}) </p>
+                </div> 
+            </h2>
+           
             {% for comment in comments %}
-                <div class="accordion" id = "comment">
+                <div class="accordion" id = "comment{{comment.id}}">
                     <div style="background-color:black;color:white" class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
-                          <button style="background-color:black;color:white" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            {{comment.user.username}} - {{comment.rating}}
+                          <button style="background-color:black;color:white" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{comment.id}}" aria-expanded="false" aria-controls="collapse{{comment.id}}">
+                            {{comment.user.username}} - {{comment.rating}} - 
+                            {% if comment.text|length > 20 %} <p>{{comment.text}}</p> {% else %} {{comment.text|slice:"20"}} {% endif %}
+                            {% comment %} {% for num in comment.rating|make_list %}
+                            <h1>{{comment.rating}} </h1>
+                            {% endfor %} {% endcomment %}
                           </button>
                         </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div id="collapse{{comment.id}}" class="accordion-collapse collapse" aria-labelledby="heading{{comment.id}}" data-bs-parent="#accordionExample">
                           <div class="accordion-body">
-                            <p> {{comment.text}} </p>                 
+                            <p> {{comment.text}} </p>       
+                            <form action = "{% url 'like_comment' product.pk %}" method = "POST">
+                                {% csrf_token %} 
+                                <button name="like-id" value= {{comment.id}} class= "btn btn-primary btn-small">{{comment.likes__count}} likes</button> 
+                            </form>
                          </div>
                         </div>
                       </div>
                 </div>
             {% endfor %}
-            
-            {% comment %} <div id = "new-comment">
-                <form method="POST">
-                    {% csrf_token %}
-                    {% crispy form %}
-                    <button id="new-comment-button" type="submit">Comment</button>
-                </form>
-            </div> {% endcomment %}
+                {% if form %}
+                    <h1>{{form.errors}}</h1>
+                    <form id= "comment-form" method="POST">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <div id = "new-comment">
+                            <span class="fa fa-star new-star"></span>
+                            <span class="fa fa-star new-star"></span>
+                            <span class="fa fa-star new-star"></span>
+                            <span class="fa fa-star new-star"></span>
+                            <span class="fa fa-star new-star"></span>
+                        </div>
+                        <button class = "btn btn-primary" type="submit">Comment</button>
+                    </form>
+                {% endif %}
+
         </div>
+            
+     
 
         {{room_name|json_script:"room-name"}}
         <script>
@@ -81,6 +111,22 @@
                 roomName +
                 '/'
             );
+            const stars = document.querySelectorAll(".new-star")
+            stars.forEach((star, i)=> star.onclick = (e)=> {
+                //Fill based on index
+                stars.forEach(star=> {
+                    star.classList.remove("checked")
+                })
+            document.getElementById("num-rating").value = i + 1
+               fillCheckedStars(i)
+            }) 
+
+            function fillCheckedStars(i) {
+                for (let k = 0; k < i+1; k++) {
+                    console.log(stars[k])
+                    stars[k].classList.add("checked");
+                }
+            }
             
             //Every time recieves message fires
             chatSocket.onmessage = (e)=> {
@@ -92,12 +138,22 @@
                 if (data.message) {
                     const newMessage = document.createElement("p")
                     const username = document.createElement("p")
-                    username.textContent = data.user
+                    const messageContainer = document.createElement("div")
+
+                    username.textContent = data.user + "-"
                     newMessage.textContent = data.message
-                    document.getElementById("recieved-messages").append(newMessage)
-                    document.getElementById("recieved-messages").append(username)
+
+                    messageContainer.classList.add("flex","bg-light","text-dark","rounded", "p-2","d-flex","flex-row","gap-row");
+                    messageContainer.append(username, newMessage)
+                    
+
+                    document.getElementById("recieved-messages").append(messageContainer)
                     console.log(data)
                 }
+            }
+            document.getElementById("first-message").onclick = () => {
+                document.getElementById("open-chat").classList.toggle("d-none")
+                document.getElementById("recieved-messages").classList.toggle("d-none")
             }
             document.getElementById("submit-button").onclick = ()=> {
                 //Get dom element text content and convert to json_script
@@ -109,12 +165,7 @@
                 }));
                 node.value = "";
             }
-
-            document.getElementById("new-comment-button").onclick = ()=> {
-                text = document.getElementById("comment-text").value 
-
-                //Send back data 
-            }
+            
         </script>
         <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -124,7 +175,46 @@
 
 
     <style>
+        .gap-row {
+            gap:5px;
+        }
+        .checked {
+            color: orange;
+          }
+        .checked:hover {
+            cursor:pointer;
+        }
+        #avg-container {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        #click-like{
+            color:darkgrey;
+        }
+        #num-rating {
+            width: 20px;
+            height: 20px;
+        }
+        #new-comment {
+            display: inline-block
+        }
 
+        #message-container {
+            position: fixed;
+           right: 10px;
+           bottom: 50px;
+           background-color: #f5f5f566;
+           z-index: 999;
+        }
+        #open-chat {
+            gap: 5px;
+        }
+        .like-click:hover {
+            cursor: pointer;
+
+        }
+    
         .product-holder {
             /* background: rgb(34,193,195);
             background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(240,45,253,1) 100%); */

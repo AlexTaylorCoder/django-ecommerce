@@ -17,5 +17,8 @@ class ProductForm(ModelForm):
 
 class CreateComment(ModelForm):
     class Meta:
+        labels = {
+            "text":"Comment"
+        }
         model = Comment
-        fields = ["rating","text"]
+        fields = ["text","rating"]
