@@ -48,11 +48,11 @@
                     <li class="nav-item">
                     <a class="nav-link" href= "{% url 'profile' %}">Profile</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/chat">Help</a>
-                    </li>
                      <li class="nav-item">
                         <a class="nav-link" id="cart" href="/main/cart"><img src="{% static '/images/shopping-cart.png' %}" alt="cart"/> {{cart_Items}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'orders' %}">purchases</a>
                     </li>
                 </ul>
                 </div>
