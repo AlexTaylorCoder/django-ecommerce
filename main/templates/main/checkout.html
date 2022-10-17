@@ -3,28 +3,35 @@
 {% block title %}product.name{% endblock title %}
 {% block content %} 
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/checkout.css' %}"/>
+<div class="page-container">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/checkout.css' %}"/>
 
-<div>
-  <h1>Order Summary</h1>
+  
+  <div class="order-summary">
+    <h1>Total: {{order.get_cart_total|floatformat:2}}</h1>
+    <h1 class="total-items">Items: {{order.get_cart_items}}</h1>
+  </div>
+    
 
-<h1>Total: {{order.get_cart_total|floatformat:2}}</h1>
-<h1>Items: {{order.get_cart_items}}</h1>
-<h1>Products</h1>
-{% for item in items %}
-	<div class="shopping-product">
-		<h3 class="product-name">{{item.product.name}}</h3>
-		<h3 class="product-price">{{item.product.price|floatformat:2}}</h3>
-		<h3 class="product-quantity">quantity</h3>
-		<h3 class="quantity-number">{{item.quantity}}</h3>
-		<img src="{% static '/images/plus.png' %}" alt="edit-quantity" class="edit-quantity"/>
-		<img src="{% static '/images/minus-sign.png' %}" alt="edit-quantity" class="edit-quantity"/>
-		<img src={{item.product.image.url}} alt={{item.product.name}} class="product-image"/>
-		<h3>{{item.get_total}}</h3>
-	</div>
-{% endfor %}
+  <div class="product-container">
+    {% for item in items %}
+      <div class="product-card">
+        <img src={{item.product.image.url}} alt={{item.product.name}}/>
+        <div class="item-info">
+          <p >Name: {{item.product.name}}</p>
+          <p >Price: ${{item.product.price|floatformat:2}}</p>
+          <p >Quantity: {{item.quantity}}</p>
+          <p>Total: ${{item.get_total}}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
 </div>
 
+
+
+<div class="form-container">
 <div class="container">
   <h1>Shipping</h1>
   <p>Please enter your shipping details.</p>
@@ -68,8 +75,10 @@
 </div>
 
 <div class="hidden" style="display: none;" id="payment-info">
-  <p>Paypal Options</p>
-  <button id="make-payment">make payment</button>
+  <!-- <button id="make-payment">make payment</button> -->
+  <button id="make-payment" class="button-10" role="button">make payment</button>
+  <p class="payment-options">Paypal Options</p>
+  <div id="paypal-button-container"></div>
  </div>
 
 <script type="text/javascript">
@@ -135,7 +144,7 @@
 
 
 
-<div id="paypal-button-container"></div>
+<!-- <div id="paypal-button-container"></div> -->
         <!-- Sample PayPal credentials (client-id) are included -->
         <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
         <script>
@@ -188,7 +197,11 @@
               });
         </script>
 
+
+</div>
+
+
+
 {% endblock content %}
 
 
-   

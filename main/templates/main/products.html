@@ -16,15 +16,107 @@
         {% for product in products%}
             <div id = {{product.id}} class="product-card">
                 <img src="{{product.image.url}}" alt="{{product.name}}"/>
-                <h1><a href="/main/{{product.id}}">{{product.name}}</a></h1>
-                <p>This is one of the best watches ever made. It can't be found nowhere else in the world
-                </p>
+                <div class="item-info">
+                    <p><a href="/main/{{product.id}}">{{product.name}}</a></p>
+                    <p class="price">List Price: <b id="price">$ {{product.price}}</b></p>
+                </div>
             </div>
         {% endfor %}
     </div>
    
      <style>
         .container_video video{
+            object-fit: cover;
+            width: 100%;
+            height: 650px;
+        }
+
+        .product-container {
+            display: grid;
+            box-sizing: border-box;
+            background-color: white;
+            grid-template-columns: 350px 350px 350px 350px;
+            justify-content: space-between;
+            align-items: center;
+            grid-row-gap: 20px;
+            justify-items: center;
+            padding: 5px;
+            background-image: linear-gradient(to right, #434343 0%, black 100%);
+        }
+        .product-card {
+            background-color: antiquewhite;
+            /* border: 2px solid  #dbeaf4;; */
+            background-image: linear-gradient(to right, #434343 0%, black 100%);
+            border-radius: 10%;
+        }
+        .product-card img{
+            width: 100%;
+            height: 260px;
+            /* margin-bottom: 15px; */
+            background-size: cover;
+            /* border-radius: 15px; */
+            border-top-right-radius: 10%;
+            border-top-left-radius: 10%;
+        }
+        .item-info {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .item-info p{
+            font-size: 20px;
+            padding-top: 5%;
+            text-align: center;
+        }
+        .price {
+            text-align: center;
+            padding-top: 5%;
+            font-size: larger;
+        }
+
+
+        /* .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background-image: linear-gradient(to right, #434343 0%, black 100%);
+
+
+        }
+
+        .product-card {
+            background-image: linear-gradient(to right, #434343 0%, black 100%);
+            width: 370px;
+            height: 380x;
+            margin: 40px;
+            border-radius: 15px;
+        }
+
+        .product-card img{
+            width: 100%;
+            height: 260px;
+            margin-bottom: 15px;
+            background-size: cover;
+            border-radius: 15px;
+        }
+
+        .product-card h1{
+            text-align: center;
+        }
+
+        .product-card p{
+            text-align: center;
+        } */
+
+    
+
+    </style>
+
+{% endblock content %}
+
+    
+
+<!-- .container_video video{
             object-fit: cover;
             width: 100%;
             height: 650px;
@@ -61,29 +153,4 @@
 
         .product-card p{
             text-align: center;
-        }
-
-    
-
-    </style>
-
-{% endblock content %}
-
-    <!-- <style>
-            .container_video {
-                display: flex !important;
-                position: fixed;
-                min-width: 100% !important;
-                margin-top: auto !important;
-                z-index: -1;
-        }
-            video.background {
-                display: flex !important;
-                position: fixed;
-                height: 100%;
-                align-self: center;
-                margin-top: auto !important;
-                z-index: -1;
-            }
-
-    </style> -->
+        } -->

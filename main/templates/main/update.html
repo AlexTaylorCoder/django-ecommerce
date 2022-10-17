@@ -2,7 +2,7 @@
 
 {% block title %} Create {% endblock title %}
 {% block content %}
-    <div class="main">
+<div class="form-group">
     <!-- Create a Form -->
     <form method="POST">
         <!-- Security token by Django -->
@@ -10,9 +10,17 @@
  
         <!-- form as paragraph -->
         {{ form.as_p }}
- 
-        <input type="submit" value="Update" >
+        <button type="submit" id="button" class = "btn btn-primary">Update Product</button>
+        <!-- <input type="submit" value="Update" > -->
     </form>
- 
 </div>
+
+<style>
+    .form-group {
+        width: 20%;
+        justify-content: center;
+        margin: auto;
+        margin-top: 9%;
+        }
+</style>
 {% endblock content %}

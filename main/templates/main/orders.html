@@ -3,12 +3,80 @@
 {% block title %}product.name{% endblock title %}
 {% block content %} 
 
-<h1>Products</h1>
-{% for order in user_orders %}
-	<p>{{order.transaction_id}}</p>
-  <p>{{order.date_ordered}}</p>
-  <p>Completed: {{order.complete}}</p>
+<div class="order-container">
+  <div class="order-details">
+    <h5>Date Ordered</h5>
+    <h5>status</h5>
+    <h5>Transaction_id</h5>
+    <h5>Details</h5>
+  </div>
+    {% for order in user_orders %}
+      {% if order.complete == True %}
+        <div class="order-details">
+          <h5 class="date">{{order.date_ordered}}</h5>
+          <h5 class="status">Complete</h5>
+          <h5 class="transaction_id">{{order.transaction_id}}</h5>
+          <button class="button-10" role="button"><a href="{% url 'order_details' order.id%}">View Details</a></button>
+        </div>
+      {% endif %}
+    {% endfor %}
+</div>
 
-{% endfor %}
+<style>
+
+ .order-container{
+  /* background-color: rgb(189, 133, 133); */
+  /* width: 100%; */
+  display: grid;
+  justify-content: space-around;
+  /* margin: auto; */
+  grid-template-columns: 100%;
+ }
+
+ .order-details {
+  display: grid;
+  grid-template-columns: 15% 15% 15% 8%;
+  justify-content: space-around;
+  border-bottom: 3px solid white;
+  align-items: center;
+ }
+
+ .order-container h5{
+  text-align: center;
+ }
+
+ .order-container button {
+  text-align: center;
+ }
+ 
+/* CSS */
+.button-10 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  border-radius: 6px;
+  border: none;
+
+  color: #fff;
+  background: linear-gradient(180deg, #455163 0%, #35445e 100%);
+  background-origin: border-box;
+  box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-10:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
+</style>
 
 {% endblock content %}
+
+
+	
+ 

@@ -82,9 +82,9 @@ def create(response):
             name = form.cleaned_data["name"] 
             price = form.cleaned_data["price"]
             image = form.cleaned_data["image"]
-            miniDescription = form.cleaned_data["miniDescription"]
+            # miniDescription = form.cleaned_data["miniDescription"]
             description = form.cleaned_data["description"]
-            product = Product.objects.create(name=name,price=price,image=image,miniDescription=miniDescription,description=description)
+            product = Product.objects.create(name=name,price=price,image=image,description=description)
 
         return HttpResponseRedirect(f'{product.id}')
     else:
@@ -136,7 +136,13 @@ def deleteProduct(response,id):
 
 @login_required(login_url='http://127.0.0.1:8000/auth/login/')
 def profile(response):
-    return render(response, 'main/profile.html',)
+    orders = response.user.order_set.all()
+    cart_Items = 0
+    for order in orders:
+        if order.complete == False:
+            cart_Items = order.get_cart_items
+    context={'cart_Items':cart_Items}
+    return render(response, 'main/profile.html', context)
 
 @login_required(login_url='http://127.0.0.1:8000/auth/login/')
 def cart(response):
@@ -215,6 +221,8 @@ def processOrder(response):
     order.transaction_id = transaction_id 
 
     order.complete = True 
+    if order.complete == True:
+        order.date_ordered = datetime.datetime.now()
     order.save()
 
     ShippingAddress.objects.create(
@@ -234,10 +242,46 @@ def orders(response):
     for order in orders:
         if order.complete == False:
             cart_Items = order.get_cart_items
-    context = {"user_orders":response.user.order_set.all(), "cart_Items":cart_Items}
+    context = {"user_orders":response.user.order_set.all().order_by('-date_ordered').values(), "cart_Items":cart_Items}
 
     return render(response, 'main/orders.html', context)
+
+
+def order_details(response,id):
+    
+    orders = response.user.order_set.all()
+    cart_Items = 0
+    for order in orders:
+        if order.complete == False:
+            cart_Items = order.get_cart_items
+
+    order = Order.objects.get(id=id)
+    items = order.orderitem_set.all()
+    shipping_address = order.shippingaddress_set.all()
+    context = {"order":order, "items":items, "shipping_address":shipping_address, "cart_Items":cart_Items}
+    return render(response, 'main/order_details.html', context)
     
 
+def delete_orderitem(response,id):
+    orders = response.user.order_set.all()
+    cart_Items = 0
+    for order in orders:
+        if order.complete == False:
+            cart_Items = order.get_cart_items
+
+    context ={"cart_Items":cart_Items}
+    item = get_object_or_404(OrderItem, id = id)
+
+    ord = 0
+    for order in orders:
+        for orderitem in order.orderitem_set.all():
+            if orderitem.id == id:
+                ord = order.id
+
+    if response.method == 'POST':
+        item.delete()
+        return redirect(f'http://127.0.0.1:8000/main/order_details/{ord}')
+        
+    return render(response, 'main/delete.html', context)
 
 

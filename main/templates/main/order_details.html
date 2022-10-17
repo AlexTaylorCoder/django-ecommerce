@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}product.name{% endblock title %}
+{% block content %} 
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/order_details.css' %}"/>
+
+<div class="order_details">
+  <h5>{{order.customer.username}}</h5>
+  <h5>{{order.transaction_id}}</h5>
+  <h5>{{order.date_ordered}}</h5>
+</div>
+
+<div class="items-container">
+  <div>
+    <h5>Image</h5>
+    <h5>Name</h5>
+    <h5>Quantity</h5>
+    <h5>Date Added</h5>
+    <h5>Total</h5>
+    <h5>Return Item</h5>
+  </div>
+  {% for item in items %}
+  <div>
+    <img src={{item.product.image.url}} alt={{item.product.name}} class="item-image"/>
+    <h5>{{item.product.name}}</h5>
+    <h5>{{item.quantity}}</h5>
+    <h5 class="date-added">{{item.date_added}}</h5>
+    <h5>$ {{item.get_total}}</h5>
+    <button class="button-10" role="button"><a href="{% url 'delete_orderitem' item.id%}">Return</a></button>
+  </div>
+{% endfor %}
+</div>
+
+    <h5 style="margin-top: 2%;" class="shipping-heading">Shipping address</h5>
+    <div class="address-info">
+      {% for address in shipping_address %}
+      <div>
+        <h5>address</h5>
+        <h5>city</h5>
+        <h5>state</h5>
+        <h5>zipcode</h5>
+      </div>
+      <div>
+        <h5>{{address.address}}</h5>
+        <h5>{{address.city}}</h5>
+        <h5>{{address.state}}</h5>
+        <h5>{{address.zipcode}}</h5>
+      </div>
+      {% endfor %}
+    </div>
+
+
+
+
+
+
+{% endblock content %}

@@ -8,9 +8,9 @@
     <form method="POST">
         <!-- Security token by Django -->
         {% csrf_token %}
-        Are you want to delete this item ?
-        <input type="submit" value="Yes" />
-        <a href="{{ request.META.HTTP_REFERER }}">Cancel </a>
+        <h3>Are you sure?</h3>
+        <input type="submit" value="yes" />
+        <a style="color: white;" href="{{ request.META.HTTP_REFERER }}">Cancel </a>
     </form>
 </div>
 
@@ -25,9 +25,22 @@
     }
 
     .main input{
-        background-color: rgba(247, 240, 240, 0.886);
-        border-radius: 15%;
+        /* background-color: rgba(247, 240, 240, 0.886); */
+        /* border-radius: 15%; */
+        border-color: #06091C;;
+        background-color: #06091C;
+        color: white;
+        font-size: 30px;
     }
+
+    .main h3{
+        font-size: 30px;
+        color: white;
+    }
+    .main a{
+        font-size: 30px;
+    }
+
 </style>
 
 

@@ -3,13 +3,147 @@
 {% block title %}product.name{% endblock title %}
 {% block content %} 
 
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}"/> -->
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}"/>
-<h1>Total: {{order.get_cart_total|floatformat:2}}</h1>
-<h1>Items: {{order.get_cart_items}}</h1>
-<h1>Products</h1>
-{% for item in items %}
-	<div class="shopping-product">
+<div class="box-element">
+	<a  class="btn btn-outline-dark" href="/main/">&#x2190; Continue Shopping</a>
+	<br>
+	<br>
+	<table class="table">
+		<tr class="headings">
+			<th><h5>Items: <strong> {{order.get_cart_items}}</strong></h5></th>
+			<th><h5>Total:<strong class="cart-total"> {{order.get_cart_total|floatformat:2}}</strong></h5></th>
+			<th>
+				<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+			</th>
+		</tr>
+	</table>
+</div>
+
+
+<h1 id="heading">Products</h1>
+
+	<div class="heading-container">
+		<div class="heading">Image</div>
+		<div class="heading">Name</div>
+		<div class="heading">Price</div>
+		<div class="heading">Quantity</div>
+		<div class="heading">Total</div>
+	</div>
+	{% for item in items %}
+		<div class="heading-container">
+		<img src={{item.product.image.url}} alt={{item.product.name}}  class="heading"/>
+		<h3  class="heading">{{item.product.name}}</h3>
+		<h3  class="heading">${{item.product.price|floatformat:2}}</h3>
+		<div class="quantity"><h3 >{{item.quantity}}</h3> <img id="add" data-product="{{item.product.id}}" data-action="add" src="{% static '/images/plus.png' %}" alt="edit-quantity" class="edit-quantity update-cart header" onClick="window.location.reload();"/> <img id="minus" data-product="{{item.product.id}}" data-action="remove" src="{% static '/images/minus-sign.png' %}" alt="edit-quantity" class="edit-quantity update-cart header" onClick="window.location.reload();"/></div>
+		<h3 class="heading">$ {{item.get_total}}</h3>
+		</div>
+		{% endfor %}
+	
+
+
+
+
+<style>
+
+	#heading {
+		text-align: center;
+		margin-bottom: 2%;
+	}
+
+	.heading-container {
+		box-sizing: border-box;
+		background-color: rgb(30, 110, 180);
+		background-color: white;
+		justify-content: space-around;
+		display: grid;
+		grid-template-columns: 150px 150px 150px 150px 150px;
+		align-items: center;
+		text-align: center;
+		grid-row-gap: 20px;
+		width: 90%;
+		border: 2px solid #dbeaf4;;
+		justify-items: center;
+  	padding: 5px;
+		margin: auto;
+	}
+	.heading{
+		border: 5%;
+		color: black;
+	}
+	.heading-container img{
+		width: 100px;
+	}
+	.quantity {
+		display: flex;
+		justify-content: center;
+		text-align: center;
+		color: black;
+	}
+
+	.quantity h3{
+		font-size: 30px;
+		padding-top: 8%;
+	}
+
+	.quantity img{
+		width: 20%;
+		height: 15%;
+		padding-top: 12%;
+	}
+
+
+
+
+.box-element {
+	background-color: white;
+	margin-bottom: 2%;
+}
+
+	/* .product-container {
+		display: flex;
+		justify-content: center;
+		background-color: white;
+	}
+
+	.product-card {
+		display: flex;
+		margin: 2%;
+		background-color: white;
+	}
+
+	.product-card img{
+		width: 10%;
+	}
+
+	.product-card h3{
+		margin-left: 15%;
+		margin-top: 2%;
+	}
+
+	#add {
+		width: 2%;
+		height: 1%;
+		margin-top: 2.2%;
+	}
+
+	#minus {
+		width: 2%;
+		height: 1%;
+		margin-top: 2.2%;
+	}
+
+	#heading {
+		text-align: center;
+	} */
+	
+</style>
+
+{% endblock content %}
+
+
+
+	<!-- <div class="shopping-product">
 		<h3 class="product-name">{{item.product.name}}</h3>
 		<h3 class="product-price">{{item.product.price|floatformat:2}}</h3>
 		<h3 class="product-quantity">quantity</h3>
@@ -18,8 +152,4 @@
 		<img data-product="{{item.product.id}}" data-action="remove" src="{% static '/images/minus-sign.png' %}" alt="edit-quantity" class="edit-quantity update-cart" onClick="window.location.reload();"/>
 		<img src={{item.product.image.url}} alt={{item.product.name}} class="product-image"/>
 		<h3>{{item.get_total}}</h3>
-	</div>
-{% endfor %}
-
-{% endblock content %}
-
+	</div> -->

@@ -2,12 +2,23 @@
 
 {% block title %} Create {% endblock title %}
 {% block content %}
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.media}}
-        {{form.as_p}}
-        <button type="submit" class = "btn btn-primary">New Product</button>
-    </form>
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.media}}
+            {{form.as_p}}
+            <button type="submit" id="button" class = "btn btn-primary">New Product</button>
+        </form>
+    </div>
+
+    <style>
+        .form-group {
+            width: 20%;
+            justify-content: center;
+            margin: auto;
+            margin-top: 9%;
+        }
+    </style>
 {% endblock content %}
 
 

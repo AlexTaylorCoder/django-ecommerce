@@ -17,5 +17,7 @@ urlpatterns = [
     path('process_order/', views.processOrder, name='process_order'),
     path('orders/',views.orders, name='orders'),
     path('like/<int:pk>',views.like_comment, name="like_comment"),
-    path('orders/',views.orders, name="orders")
+    path('orders/',views.orders, name="orders"),
+    path('order_details/<int:id>',views.order_details, name="order_details"),
+    path('delete_orderitem/<int:id>/',views.delete_orderitem, name='delete_orderitem'),
 ]
