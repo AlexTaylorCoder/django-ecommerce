@@ -28,7 +28,7 @@ In the review section, users can leave a comment on the product. Users can also 
 
 ![review section](https://user-images.githubusercontent.com/105521583/198618581-57c294ff-fe93-43fe-839e-ddbbd660d6c1.png)
 
-If Users want to check out, they can navigate to the cart using the navbar. This cart has all the functionality a cart should have. Users can edit the quantity of a product by clicking on the plus or minus Icon and the total of the item will also adjust.
+If Users want to check out, they can navigate to the cart using the navbar. This cart has all the functionality a cart should have.
 
 ![cart](https://user-images.githubusercontent.com/105521583/198625456-af738de6-d3eb-424a-92f0-7ff239d54e4f.png)
 
@@ -44,7 +44,7 @@ Users can checkout with any of the payment options available. This will then com
 
 ![payment complete](https://user-images.githubusercontent.com/105521583/198388429-3f7b00a1-674a-4d89-b776-09306eaa4118.png)
 
-If Users want to return something or check up on their past orders they can click on purchases in the navbar. The purchases page has every order listed made by that specific user. There is also a view details option which shows the details of a specific order. Here I am going to click view details for the order we just made.
+If Users want to return something or check up on their past orders they can click on purchases in the navbar. Purchases page has every order made by that specific user. There is also a view details option. Here I am going to click view details for the order we just made.
 
 ![Django-11](https://user-images.githubusercontent.com/105521583/198389357-fac4239d-7654-4e0f-a7a9-a5473d5f7427.png)
 
