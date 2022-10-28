@@ -12,13 +12,13 @@ We Authenticated users at login by using Django built in authentication.
 
 ![Django-14](https://user-images.githubusercontent.com/105521583/198363056-af45214c-3f61-4d94-9cd9-be62f7652786.png)
 
-Once logged in, Users will be redirected to the main page. There is navbar at the top of the main page which users can use to navigate to different pages along with the option to logout. This navbar is consistently at the top of every page throughout the website. At the Bottom of main page all the products are listed using css grid layout. 
+Once logged in, Users will be redirected to the main page. There is navbar at the top of the main page which users can use to navigate to different pages along with the option to logout. This navbar is consistently at the top of every page throughout the website. At the Bottom all the items are listed using css grid layout. 
 
 ![navbar](https://user-images.githubusercontent.com/105521583/198407990-bc300707-1dcc-4edf-aa36-236f0a64412e.png)
 
 ![Django-2](https://user-images.githubusercontent.com/105521583/198365036-b73fb232-cec5-4730-b3ca-edcf667cdd94.png)
 
-Users have the option to click any item which will take them ti item detail page. This page has details about the product like the image, price and description. This page also includes many functionalities like add to cart option, update product option, delete option, review section, and live chat to ask questions about the product from the admin. 
+Users have the option to click on any item which will take them to item detail page. This page has details about the product like the image, price and description. This page also includes many functionalities like add to cart option, update product option, delete option, review section, and live chat.
 
 In the live chat users can ask questions about the product from the admin. It has the username to the left and the message they sent to the rigt as shown below.
 
@@ -28,7 +28,7 @@ In the review section users can leave a comment on the product. Users can also l
 
 ![review section](https://user-images.githubusercontent.com/105521583/198618581-57c294ff-fe93-43fe-839e-ddbbd660d6c1.png)
 
-If Users want to checkout, they can click the cart icon in the navbar which will then redirect them to the cart page. This cart has all the functionality a cart should. Users can edit the quantity of a product by clicking on the plus or minus Icon and the total of the item will also adjust.
+If Users want to checkout, they can navigate to cart using the navbar. This cart has all the functionality a cart should have. Users can edit the quantity of a product by clicking on the plus or minus Icon and the total of the item will also adjust.
 
 ![cart](https://user-images.githubusercontent.com/105521583/198625456-af738de6-d3eb-424a-92f0-7ff239d54e4f.png)
 
@@ -48,7 +48,7 @@ If Users want to return something or checkup on their past orders they can click
 
 ![Django-11](https://user-images.githubusercontent.com/105521583/198389357-fac4239d-7654-4e0f-a7a9-a5473d5f7427.png)
 
-Here we can see specific details of the order we placed earlier along with the shipping address of the order. There is also a return option. Clicking the return button will delete the item from the order.
+Now we can see specific details of the order we placed earlier along with the shipping address of the order. There is also a return option. Clicking the return button will delete the item from the order.
 
 ![Django-12](https://user-images.githubusercontent.com/105521583/198390295-df51ac60-238b-4f34-b8b3-da60664f1aa3.png)
 
