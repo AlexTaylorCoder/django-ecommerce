@@ -12,15 +12,13 @@ We Authenticated users at login by using Django built in authentication.
 
 ![Django-14](https://user-images.githubusercontent.com/105521583/198363056-af45214c-3f61-4d94-9cd9-be62f7652786.png)
 
+Once logged in, Users will be redirected to the main page. There is navbar at the top of the main page which users can use to navigate to different pages along with the option to logout. This navbar is consistently at the top of every page throughout the website. At the Bottom of main page all the products are listed using css grid layout. 
 
-
-Once logged in, Users will be redirected to the main page. There is navbar at the top of the main page which users can use to navigate to different pages along with the option to logout. This navbar is consistently at the top of every page throughout the website. At the Bottom of main page all the products listed using css grid layout. 
-
-![Django-1](https://user-images.githubusercontent.com/105521583/198364238-4058d8af-df17-48e7-b96d-3cde3a063383.png)
+![navbar](https://user-images.githubusercontent.com/105521583/198407990-bc300707-1dcc-4edf-aa36-236f0a64412e.png)
 
 ![Django-2](https://user-images.githubusercontent.com/105521583/198365036-b73fb232-cec5-4730-b3ca-edcf667cdd94.png)
 
-By clicking on the product name Users are redirected to prouduct detail page shown below. This page has details about the product like the image, price and description. This page also includes many functionalities like add to cart option .update product option, delete option, review section, and live chat to ask questions about the product from the admin. 
+Users have the option to click any item which will take them ti item detail page. This page has details about the product like the image, price and description. This page also includes many functionalities like add to cart option .update product option, delete option, review section, and live chat to ask questions about the product from the admin. 
 
 ![Django-6](https://user-images.githubusercontent.com/105521583/198372114-e806aff2-0704-4fea-ae17-6ede2a79d25e.png)
 
