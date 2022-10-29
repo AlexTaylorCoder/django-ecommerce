@@ -17,9 +17,6 @@ Provide users with live chat to ask questions about a product by integrating Web
 Implemented comment section. Users can also like each other comments.                                                     
 ![review section](https://user-images.githubusercontent.com/105521583/198618581-57c294ff-fe93-43fe-839e-ddbbd660d6c1.png)
 
-Required users to enter the shipping address.                                        
-![shipping-address](https://user-images.githubusercontent.com/105521583/198839591-cd36c5ae-787d-4963-84b2-72f80852959b.png)
-
 Integrated PayPal online checkout options.
 ![Django-10](https://user-images.githubusercontent.com/105521583/198387216-33384fa4-a32d-40e7-aeeb-465e6f9b74fc.png)
 
