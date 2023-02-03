@@ -13,12 +13,6 @@ Technologies: Django, Python, Javascript, HTML, CSS, Bootstrap, WebSocket, Git.
 Authenticated users at login by using Django built-in authentication.
 ![Django-14](https://user-images.githubusercontent.com/105521583/198363056-af45214c-3f61-4d94-9cd9-be62f7652786.png)
 
-Provide users with live chat through WebSockets to ask questions about a product.                           
-![live chat](https://user-images.githubusercontent.com/105521583/198624191-373d3875-17bc-417c-920b-3318c4309a1e.png)
-
-Implemented comment section. Users can also like each other's comments.                                                     
-![review section](https://user-images.githubusercontent.com/105521583/198618581-57c294ff-fe93-43fe-839e-ddbbd660d6c1.png)
-
 Integrated PayPal online checkout options.
 ![Django-10](https://user-images.githubusercontent.com/105521583/198387216-33384fa4-a32d-40e7-aeeb-465e6f9b74fc.png)
 
