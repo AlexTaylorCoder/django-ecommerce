@@ -1,7 +1,5 @@
 # Django-Ecommerce
 
-# Demo https://youtu.be/YcT69Z1SdZA
-
 Django Ecommerce app by Hammad Faiz and Alex Taylor
 
 Project Goal: Create an SSR (Server Side Rendering) Project so we can get a full understanding of a backend framework.
